@@ -1,0 +1,33 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/btnAddItem"
+        android:padding="12dp"
+        android:textSize="24sp"
+        android:text="@string/btn_add_text" />
+
+    <androidx.fragment.app.FragmentContainerView
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingTop="28dp"
+        android:paddingBottom="28dp"
+        app:layout_constraintBottom_toTopOf="@id/btnAddItem"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".MainActivity"
+        android:name="com.example.hw1_numbered_block_list.BlockListFragment"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
