@@ -13,9 +13,10 @@ class BlockListViewModel(private val savedStateHandle: SavedStateHandle): ViewMo
 
     init {
         if (totalBlocks != 0) {
-            for (i in 0..totalBlocks)
+            val restoreBlocksAmount = totalBlocks
+            totalBlocks = 0
+            for (i in 1..restoreBlocksAmount)
                 addBlock()
-            totalBlocks /= 2
         }
     }
     fun addBlock() {
