@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">HW2_Fetching_images_from_api</string>
+    <string name="try_again">Try again</string>
+    <string name="error_message">Error message</string>
+</resources>
