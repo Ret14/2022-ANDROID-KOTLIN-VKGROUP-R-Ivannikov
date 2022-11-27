@@ -3,8 +3,6 @@ package com.example.hw2_fetching_images_from_api
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.hw2_fetching_images_from_api.api.PhotoItem
-import retrofit2.HttpException
-import java.io.IOException
 
 private const val TAG = "PhotoPagingSource"
 
@@ -25,9 +23,7 @@ class PhotoPagingSource(
             val nextKey = if (photos.size < pageSize) null else page + 1
             val prevKey = if (page == 0) null else page - 1
             return LoadResult.Page(photos, prevKey, nextKey)
-        } catch (e: IOException) {
-            return LoadResult.Error(e)
-        } catch (e: HttpException) {
+        } catch (e: Exception) {
             return LoadResult.Error(e)
         }
     }
