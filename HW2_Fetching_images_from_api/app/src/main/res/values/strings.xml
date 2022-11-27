@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">HW2_Fetching_images_from_api</string>
     <string name="try_again">Try again</string>
-    <string name="error_message">Error message</string>
+    <string name="default_error_message">Sorry, something went wrong(</string>
+    <string name="bad_internet_error_massage">Sorry, something might be wrong with your internet connection :(</string>
+    <string name="bad_http_code_error_massage">Sorry, something went wrong during the request, try retrying</string>
 </resources>

@@ -55,6 +55,7 @@ class PhotoListFragment : Fragment() {
         adapter: PhotoListAdapter,
         binding: FragmentPhotoListBinding
     ) {
+        binding.btnRetry.setOnClickListener { adapter.retry() }
         adapter.addLoadStateListener { state: CombinedLoadStates ->
             binding.apply {
                 rvPhotoList.isVisible = state.refresh != LoadState.Loading
@@ -62,12 +63,16 @@ class PhotoListFragment : Fragment() {
                 btnRetry.isVisible = state.refresh is LoadState.Error
                 tvErrorMessage.isVisible = state.refresh is LoadState.Error
                 if (state.refresh is LoadState.Error){
-                    tvErrorMessage.text = (state.refresh as LoadState.Error).error.localizedMessage
+                    tvErrorMessage.setText(
+                        when ((state.refresh as LoadState.Error).error.localizedMessage) {
+                            "No internet" -> R.string.bad_internet_error_massage
+                            "Bad response code" -> R.string.bad_http_code_error_massage
+                            else -> R.string.default_error_message
+                        }
+                    )
                 }
             }
         }
-        binding.btnRetry.setOnClickListener { adapter.retry() }
-
     }
     override fun onDestroyView() {
         super.onDestroyView()

@@ -20,7 +20,6 @@ class PhotoLoadStateAdapter(
         val binding = DefaultLoadStateBinding.inflate(inflater, parent, false)
         return PhotoLoadStateHolder(binding, retry)
     }
-
 }
 
 class PhotoLoadStateHolder(
@@ -33,7 +32,13 @@ class PhotoLoadStateHolder(
             tvErrorMessage.isVisible = loadState !is LoadState.Loading
             pbLoadState.isVisible = loadState is LoadState.Loading
             if (loadState is LoadState.Error){
-                tvErrorMessage.text = loadState.error.localizedMessage
+                tvErrorMessage.setText(
+                    when (loadState.error.localizedMessage) {
+                    "No internet" -> R.string.bad_internet_error_massage
+                    "Bad response code" -> R.string.bad_http_code_error_massage
+                    else -> R.string.default_error_message
+                    }
+                )
             }
             btnRetry.setOnClickListener {
                 retry.invoke()
