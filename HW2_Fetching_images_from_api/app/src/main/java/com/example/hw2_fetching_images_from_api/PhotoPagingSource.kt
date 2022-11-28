@@ -7,7 +7,9 @@ import com.example.hw2_fetching_images_from_api.api.PhotoItem
 private const val TAG = "PhotoPagingSource"
 
 class PhotoPagingSource(
-    private val photoRepository: PhotoRepository
+    private val photoRepository: PhotoRepository,
+    private val maxLoadSize: Int,
+    private val startPage: Int
 ): PagingSource<Int, PhotoItem>() {
     override fun getRefreshKey(state: PagingState<Int, PhotoItem>): Int? {
         val anchorPosition = state.anchorPosition ?: return null
@@ -16,12 +18,12 @@ class PhotoPagingSource(
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, PhotoItem> {
-        val page = params.key ?: 0
-        val pageSize = params.loadSize.coerceAtMost(100)
+        val page = params.key ?: startPage
+        val pageSize = params.loadSize.coerceAtMost(maxLoadSize)
         try {
             val photos = photoRepository.fetchPhotos(page, pageSize)
             val nextKey = if (photos.size < pageSize) null else page + 1
-            val prevKey = if (page == 0) null else page - 1
+            val prevKey = if (page == startPage) null else page - 1
             return LoadResult.Page(photos, prevKey, nextKey)
         } catch (e: Exception) {
             return LoadResult.Error(e)

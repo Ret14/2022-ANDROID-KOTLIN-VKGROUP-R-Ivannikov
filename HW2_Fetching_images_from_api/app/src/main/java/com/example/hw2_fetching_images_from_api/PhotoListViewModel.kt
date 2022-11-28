@@ -16,7 +16,7 @@ class PhotoListViewModel: ViewModel() {
     private val photoRepository = PhotoRepository()
     val photoItems: StateFlow<PagingData<PhotoItem>> =
         Pager(PagingConfig(pageSize = 20)) {
-            PhotoPagingSource(photoRepository)
+            PhotoPagingSource(photoRepository, maxLoadSize = 100, startPage = 0)
         }.flow
             .cachedIn(viewModelScope)
             .stateIn(viewModelScope, SharingStarted.Lazily, PagingData.empty())
