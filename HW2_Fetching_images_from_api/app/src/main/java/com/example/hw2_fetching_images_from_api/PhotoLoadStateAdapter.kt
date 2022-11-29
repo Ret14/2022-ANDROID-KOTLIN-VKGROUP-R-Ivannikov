@@ -26,6 +26,11 @@ class PhotoLoadStateHolder(
     private val binding: DefaultLoadStateBinding,
     private val retry: () -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
+    init {
+        binding.btnRetry.setOnClickListener {
+            retry.invoke()
+        }
+    }
     private fun getErrorMessage(state: LoadState.Error): Int {
         return when (state.error.message) {
             Consts.ioeExceptionFlag -> R.string.bad_internet_error_massage
@@ -39,9 +44,6 @@ class PhotoLoadStateHolder(
             tvErrorMessage.isVisible = loadState !is LoadState.Loading
             pbLoadState.isVisible = loadState is LoadState.Loading
             if (loadState is LoadState.Error) tvErrorMessage.setText(getErrorMessage(loadState))
-            btnRetry.setOnClickListener {
-                retry.invoke()
-            }
         }
     }
 }
