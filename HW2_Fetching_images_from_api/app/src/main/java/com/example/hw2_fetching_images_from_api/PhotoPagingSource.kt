@@ -4,8 +4,6 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.hw2_fetching_images_from_api.api.PhotoItem
 
-private const val TAG = "PhotoPagingSource"
-
 class PhotoPagingSource(
     private val photoRepository: PhotoRepository,
     private val maxLoadSize: Int,

@@ -16,8 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hw2_fetching_images_from_api.databinding.FragmentPhotoListBinding
 import kotlinx.coroutines.launch
 
-const val TAG_CHECK_RESPONSE = "TAG_CHECK_RESPONSE"
-
 class PhotoListFragment : Fragment() {
     private var _binding: FragmentPhotoListBinding? = null
     private val binding
@@ -63,17 +61,18 @@ class PhotoListFragment : Fragment() {
                 btnRetry.isVisible = state.refresh is LoadState.Error
                 tvErrorMessage.isVisible = state.refresh is LoadState.Error
                 if (state.refresh is LoadState.Error){
-                    tvErrorMessage.setText(
-                        when ((state.refresh as LoadState.Error).error.localizedMessage) {
-                            "No internet" -> R.string.bad_internet_error_massage
-                            "Bad response code" -> R.string.bad_http_code_error_massage
-                            else -> R.string.default_error_message
-                        }
-                    )
+                    tvErrorMessage.setText(getErrorMessage(state.refresh as LoadState.Error))
                 }
             }
         }
     }
+    private fun getErrorMessage(refresh: LoadState.Error): Int {
+        return when (refresh.error.message) {
+            Consts.ioeExceptionFlag -> R.string.bad_internet_error_massage
+            Consts.httpExceptionFlag -> R.string.bad_http_code_error_massage
+            else -> R.string.default_error_message
+        }
+     }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
